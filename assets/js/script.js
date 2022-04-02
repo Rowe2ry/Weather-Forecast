@@ -40,7 +40,7 @@ function rightNowWeather(location) {
             if (response.ok) {
                 response.json()
                     .then(function (data) {
-                        console.log(data);
+                        // console.log(data);
                         var nowName = data.name; // string --- index 0
                         var nowDate =  moment(data.dt, 'X').format('l'); // UNIX time to string DD/DD/YYYY --- index 1
                         var nowIcon = data.weather[0].icon; // icon code 3 digit string --- index 2
@@ -64,7 +64,7 @@ function rightNowWeather(location) {
 
 function fiveDayForecastWeather(arr) {
     var fiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' +
-    arr[6] + '&lon=' + arr[7] + '&exclude=minutely,hourly,alerts&appid=' +
+    arr[6] + '&lon=' + arr[7] + '&exclude=minutely,hourly,alerts&units=imperial&appid=' +
     APIkeyFiveDay;
 
     fetch(fiveDayForecastURL)
@@ -72,8 +72,27 @@ function fiveDayForecastWeather(arr) {
             if (response.ok) {
                 response.json()
                     .then(function (data) {
-                        console.log(data);
-                        
+                        // console.log(data);
+                        var uvIndex = data.daily[0].uvi;
+                        var nowDataRelevant = arr;
+                        nowDataRelevant.push(uvIndex);
+                        console.log ('relevant data for current conditions should be 9 things');
+                        console.log(nowDataRelevant);
+                        //populateCurrentWeather(nowDataRelevant);
+                        var fiveDayRelevantdata = [];
+                        for (i = 1; i < 6; i++) {
+                            var objectDay = {
+                                name: "day " + (i),
+                                date: moment(data.daily[i].dt, 'X').format('l'),
+                                icon: data.daily[i].weather[0].icon,
+                                temp: data.daily[i].temp.day,
+                                wind: data.daily[i].wind_speed,
+                                humid: data.daily[i].humidity,
+                            };
+                            fiveDayRelevantdata.push(objectDay);
+                        }
+                        console.log('5 days ofrelevant data here hopefully');
+                        console.log(fiveDayRelevantdata);
                     });
                 } else {
                     console.log('error friend');
