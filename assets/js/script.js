@@ -8,64 +8,84 @@ var mainDivEl = document.querySelector(".row");
  * DECLARE &/OR ASSIGN GLOBAL SCOPE VARIABLE
  * ========================================================================= */
 
-var APIkey = '00d31542c0f530cb4f115dab6831ce15';
-var iconURLpt1 = 'http://openweathermap.org/img/wn/';
-var iconURLpt2 = '@2x.png'
-var city = "atlanta";
-var state;
+var APIkeyCurrent = '00d31542c0f530cb4f115dab6831ce15';
+var APIkeyFiveDay = 'd2615aa0825538ecfc67550581ba6a13';
+
+/* var iconURL = 'http://openweathermap.org/img/wn/' +
+    iconCode +
+    '@2x.png'; */
+
+var cityName = "atlanta";
 
 // I know global variables aren't great, but I was having trouble defining a global variable that  would hold the fetch response as an object
-var curCityName;
-var curCityDateTime;
-var curCityIconCode;
-var curCityIconURL;
-var curCityCond;
-var curCityTemp;
-var curCityHumid;
-var curCityWind;
-var curCityUV;
 
 
 /* =========================================================================
  * FUNCTION DEFINITIONS
  * ========================================================================= */
 
-// the API call I should have been using......
+// TODO: the API call I should have been using......
 /* fetch('https://api.openweathermap.org/data/2.5/onecall?' + 'lat=33.44&lon=-94' + '.04&exclude=hourly,minutely,alerts&units=imperialappid=' + APIkey)*/
 
 
 // grab one day weather data from OpenWeather by city name
 function rightNowWeather(location) {
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + location + '&units=imperial&appid=' + APIkey).then( function (response){
-        if (response.ok) {
-            response.json().then(function (data) {
-            console.log(data);
-            curCityName = data.name; // name as string
-            console.log("The city's name is :" + curCityName);
-            curCityDateTime = moment(data.dt, 'X').format('llll'); // day and time
-            console.log('Date and time are: ' + curCityDateTime);
-            curCityIconCode = data.weather[0].icon; // 3 digit code
-            curCityIconURL = iconURLpt1 + curCityIconCode + iconURLpt2;
-            var imageForCurrent = document.createElement('img');
-            imageForCurrent.setAttribute('src', curCityIconURL);
-            imageForCurrent.setAttribute('alt', 'Icon showing weather conditions code: ' + curCityIconCode);
-            mainDivEl.append(imageForCurrent);
-            curCityCond = data.weather[0].description; // ex. "clear skies"
-            console.log('the current conditions are: ' + curCityCond);
-            curCityTemp = data.main.temp; // °F
-            console.log('It is currently ' + curCityTemp + '°F');
-            curCityHumid = data.main.humidity; // %
-            console.log('with ' + curCityHumid + '% humidity');
-            curCityWind = data.wind.speed; // mph
-            console.log('wind speeds of ' + curCityWind + ' miles/hour')
-            //curCityUV = data.;
-            });
-        } else {
-            console.log('error friend');
-        };
-    });
+    var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + 
+    cityName +
+    '&units=imperial&appid=' +
+    APIkeyCurrent;
+
+    fetch(currentWeatherURL)
+        .then(function (response){
+            if (response.ok) {
+                response.json()
+                    .then(function (data) {
+                        console.log(data);
+                        var nowName = data.name; // string --- index 0
+                        var nowDate =  moment(data.dt, 'X').format('l'); // UNIX time to string DD/DD/YYYY --- index 1
+                        var nowIcon = data.weather[0].icon; // icon code 3 digit string --- index 2
+                        var nowTemp = data.main.temp; // °F --- index 3
+                        var nowHumid = data.main.humidity; // humidity in % --- index 4
+                        var nowWind = data.wind.speed; // wind speed in mp/h --- index 5
+                        var latitude = data.coord.lat; // number --- index 6
+                        var longitude = data.coord.lon; // number --- index 7
+                        var nowDataRelevant = [
+                            nowName, nowDate, nowIcon, nowTemp, nowHumid, nowWind, latitude, longitude
+                        ];
+                        // populatePage(nowDataRelevant)
+                        fiveDayForecastWeather(nowDataRelevant);
+                    });
+            } else {
+                console.log('error friend');
+            };
+        });
 };
 
+function populatePage(arr) {
+
+};
+
+function fiveDayForecastWeather(arr) {
+    var fiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' +
+    arr[6] + 
+    '&lon=' +
+    arr[7] +
+    '.04&exclude=hourly,minutely,alerts&units=imperialappid=' +
+    APIkeyFiveDay;
+
+    fetch(fiveDayForecastURL)
+        .then(function (response){
+            if (response.ok) {
+                response.json()
+                    .then(function (data) {
+                        console.log(data);
+                    });
+                } else {
+                    console.log('error friend');
+                };
+        });
+    
+};
 
 /* =========================================================================
  * ACTIVE EVENT LISTENERS
@@ -77,4 +97,4 @@ function rightNowWeather(location) {
 
 
 
-rightNowWeather(city);
+rightNowWeather(cityName);
