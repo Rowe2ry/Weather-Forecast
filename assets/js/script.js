@@ -47,12 +47,13 @@ function rightNowWeather(location) {
                         var nowTemp = data.main.temp; // °F --- index 3
                         var nowHumid = data.main.humidity; // humidity in % --- index 4
                         var nowWind = data.wind.speed; // wind speed in mp/h --- index 5
-                        var latitude = data.coord.lat; // number --- index 6
-                        var longitude = data.coord.lon; // number --- index 7
+                        var latitude = data.coord.lat;
+                        latitude = latitude.toFixed(2); // number --- index 6
+                        var longitude = data.coord.lon;
+                        longitude = longitude.toFixed(2);// number --- index 7
                         var nowDataRelevant = [
                             nowName, nowDate, nowIcon, nowTemp, nowHumid, nowWind, latitude, longitude
                         ];
-                        // populatePage(nowDataRelevant)
                         fiveDayForecastWeather(nowDataRelevant);
                     });
             } else {
@@ -61,16 +62,9 @@ function rightNowWeather(location) {
         });
 };
 
-function populatePage(arr) {
-
-};
-
 function fiveDayForecastWeather(arr) {
     var fiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' +
-    arr[6] + 
-    '&lon=' +
-    arr[7] +
-    '.04&exclude=hourly,minutely,alerts&units=imperialappid=' +
+    arr[6] + '&lon=' + arr[7] + '&exclude=minutely,hourly,alerts&appid=' +
     APIkeyFiveDay;
 
     fetch(fiveDayForecastURL)
@@ -79,6 +73,7 @@ function fiveDayForecastWeather(arr) {
                 response.json()
                     .then(function (data) {
                         console.log(data);
+                        
                     });
                 } else {
                     console.log('error friend');
