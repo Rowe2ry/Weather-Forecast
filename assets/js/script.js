@@ -73,25 +73,56 @@ function fiveDayForecastWeather(arr) {
                         for (i = 0; i < 6; i++) {
                             var objectDay = {
                                 city: cityName,
-                                day: "day " + (i),
+                                day: "day" + (i),
                                 date: moment(data.daily[i].dt, 'X').format('l'),
                                 weekday: moment(data.daily[i].dt, 'X').format('dddd'),
                                 icon: data.daily[i].weather[0].icon,
-                                temp: data.daily[i].temp.day,
-                                wind: data.daily[i].wind_speed,
-                                humid: data.daily[i].humidity,
+                                temp: data.daily[i].temp.day +'°F',
+                                wind: data.daily[i].wind_speed + 'mph',
+                                humid: data.daily[i].humidity + '%',
                                 uvIndex: data.daily[0].uvi
                             };
                             fiveDayRelevantdata.push(objectDay);
                         }
                         console.log('6 days of relevant data here hopefully');
                         console.log(fiveDayRelevantdata);
+                        populatePage(fiveDayRelevantdata);
                     });
                 } else {
                     console.log('error friend');
                 };
         });
     
+};
+
+function populatePage (arr) {
+    var pageUVindex = document.getElementById('day0-uv');
+    if (arr[0].uvIndex <= 2.5) {
+        pageUVindex.setAttribute('class', 'inline card-filler uvLow');
+    } else if (arr[0].uvIndex > 2.5 && arr[0].uvIndex <=5.5) {
+        pageUVindex.setAttribute('class', 'inline card-filler uvModerate');
+    } else if (arr[0].uvIndex > 5.5 && arr[0].uvIndex <=7.5) {
+        pageUVindex.setAttribute('class', 'inline card-filler uvHigh');
+    } else if (arr[0].uvIndex > 7.5 && arr[0].uvIndex <=10.5) {
+        pageUVindex.setAttribute('class', 'inline card-filler uvSevere');
+    } else {
+        pageUVindex.setAttribute('class', 'inline card-filler uvInsane');
+    };
+    for (i = 0; i < arr.length; i++) {
+        if (i > 1) {
+            var pageWeekday = document.getElementById('day' + i + '-weekday');
+            pageWeekday.textContent=arr[i].weekday;
+        };
+        if (i === 0) {
+            var cityNameFromAPI = document.getElementById('locationName');
+            cityNameFromAPI.textContent = arr[i].city;
+            pageUVindex.textContent = arr[0].uvIndex;
+        };
+        var pageIcon = document.getElementById('day' + i + '-icon');
+        pageIcon.setAttribute('src', 'http://openweathermap.org/img/wn/' + arr[i].icon + '@2x.png');
+
+    };
+
 };
 
 /* =========================================================================
