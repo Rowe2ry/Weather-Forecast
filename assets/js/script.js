@@ -2,7 +2,7 @@
  * GRAB DOM ELEMENTS FOR REFERENCE
  * ========================================================================= */
 
-var mainDivEl = document.querySelector(".row"); 
+//TODO: grab the input text field, and search history input field
 
 /* =========================================================================
  * DECLARE &/OR ASSIGN GLOBAL SCOPE VARIABLE
@@ -11,22 +11,11 @@ var mainDivEl = document.querySelector(".row");
 var APIkeyCurrent = '00d31542c0f530cb4f115dab6831ce15';
 var APIkeyFiveDay = 'd2615aa0825538ecfc67550581ba6a13';
 
-/* var iconURL = 'http://openweathermap.org/img/wn/' +
-    iconCode +
-    '@2x.png'; */
-
 var city = "atlanta";
-
-// I know global variables aren't great, but I was having trouble defining a global variable that  would hold the fetch response as an object
-
 
 /* =========================================================================
  * FUNCTION DEFINITIONS
  * ========================================================================= */
-
-// TODO: the API call I should have been using......
-/* fetch('https://api.openweathermap.org/data/2.5/onecall?' + 'lat=33.44&lon=-94' + '.04&exclude=hourly,minutely,alerts&units=imperialappid=' + APIkey)*/
-
 
 // grab one day weather data from OpenWeather by city name
 function rightNowWeather(location) {
@@ -131,9 +120,20 @@ function populatePage (arr) {
     };
 };
 
+//TODO: function to grab the local storage on page load and populate the history.
+    // Limit to last 10 searches and always start with blank string (11 item array)
+
 /* =========================================================================
  * ACTIVE EVENT LISTENERS
  * ========================================================================= */
+
+//TODO: search button event listener (on "click" # search-btn)
+    // TODO: this function should add the search to the local storage history,
+    // convert the user input to lowercase and pass it to the "rightNowWeather()" function
+
+//TODO: option event listener (on "change", #search-history)
+    // if the user clicks something from their history, pass that value (toLowercase)
+    // into the "rightNowWeather()" function
 
 /* =========================================================================
  * ACTUAL PAGE LOAD LOGIC AND FUNCTION EXECUTION
