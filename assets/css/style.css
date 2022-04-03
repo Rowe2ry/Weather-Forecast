@@ -189,11 +189,11 @@ margin: .5em;
     position: absolute;
     top: 0.5rem;
     right: 1.5rem;
-    width: 20%%;
+    width: 20%;
     height: auto;
 }
 
-.card-icon-tertiary{
+.card-icon-tertiary {
     position: absolute;
     top: 0rem;
     right: 0rem;
@@ -201,15 +201,14 @@ margin: .5em;
     height: auto;
 }
 
-@media (max-width:890px) {
+@media screen and (max-width:890px) {
     
-    h5,
-    .card-filler {
+    h5, .card-filler {
         font-size: 2.5vw;
     }
 }
 
-@media (max-width:549px) {
+@media screen and (max-width:549px) {
     
     h5,
     .card-filler {
