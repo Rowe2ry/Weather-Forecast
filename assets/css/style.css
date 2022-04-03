@@ -51,7 +51,7 @@ header {
 }
 
 .section-title {
-    margin-top: 1.125em;
+    margin-top: .75em;
 }
 
 #tagline {
@@ -104,4 +104,76 @@ header {
     background-color: var(--color-dark);
     border-top: 2px solid var(--color-vibrant);
     border-bottom: 6px solid var(--color-drk-shadow);
+}
+
+.card {
+    border: 2px solid var(--color-dark);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    margin-top: 1.6rem;
+    position: relative;
+}
+
+.card-title {
+    margin-bottom: .125rem;
+}
+
+.card-filler {
+    margin: 0 0;
+    font-size: 1.8rem;
+}
+
+.card-icon-main{
+    position: absolute;
+    top: 0.5rem;
+    right: 1.5rem;
+    width: 30%;
+    height: auto;
+}
+
+.uv-index-scale{
+    position: absolute;
+    bottom: .5rem;
+    right: 1.5rem;
+    width: 50%;
+    height: auto;
+}
+
+.inline {
+    display: inline;
+}
+
+.uvInsane {
+    padding: .125em 1.5em;
+    border-radius: .25em;
+    background-color: #ac00dc;
+    color: #ffffff;
+}
+
+.uvSevere {
+    padding: .125em 1.5em;
+    border-radius: .25em;
+    background-color: #FF0000;
+    color: #ffffff;
+}
+
+.uvHigh {
+    padding: .125em 1.5em;
+    border-radius: .25em;
+    background-color: #ff7000;
+    color: #ffffff;
+}
+
+.uvModerate {
+    padding: .125em 1.5em;
+    border-radius: .25em;
+    background-color: #ffff00;
+    color: #000000;
+}
+
+.uvLow {
+    padding: .125em 1.5em;
+    border-radius: .25em;
+    background-color: #00AA00;
+    color: #ffffff;
 }
