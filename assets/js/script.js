@@ -2,7 +2,9 @@
  * GRAB DOM ELEMENTS FOR REFERENCE
  * ========================================================================= */
 
-//TODO: grab the input text field, and search history input field
+var searchQueryInput = document.getElementById('cityName');
+var searchHistoryEl = document.getElementById('search-history');
+var searchButtonEl = document.getElementById('search-btn');
 
 /* =========================================================================
  * DECLARE &/OR ASSIGN GLOBAL SCOPE VARIABLE
@@ -10,8 +12,6 @@
 
 var APIkeyCurrent = '00d31542c0f530cb4f115dab6831ce15';
 var APIkeyFiveDay = 'd2615aa0825538ecfc67550581ba6a13';
-
-var city = "atlanta";
 
 /* =========================================================================
  * FUNCTION DEFINITIONS
@@ -127,9 +127,15 @@ function populatePage (arr) {
  * ACTIVE EVENT LISTENERS
  * ========================================================================= */
 
-//TODO: search button event listener (on "click" # search-btn)
-    // TODO: this function should add the search to the local storage history,
-    // convert the user input to lowercase and pass it to the "rightNowWeather()" function
+
+
+searchButtonEl.addEventListener("click", function(event) {
+    event.preventDefault();
+    var searchQuery = searchQueryInput.value;
+    if (searchQuery != '') {
+        rightNowWeather(searchQuery);
+    }
+});
 
 //TODO: option event listener (on "change", #search-history)
     // if the user clicks something from their history, pass that value (toLowercase)
@@ -138,7 +144,3 @@ function populatePage (arr) {
 /* =========================================================================
  * ACTUAL PAGE LOAD LOGIC AND FUNCTION EXECUTION
  * ========================================================================= */
-
-
-
-rightNowWeather(city);
