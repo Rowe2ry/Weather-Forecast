@@ -63,6 +63,10 @@ footer {
     margin-bottom: 0.375em;  
 }
 
+.page-info {
+margin: .5em;
+}
+
 .credit {
     font-size: 1.3rem;;
     font-weight: bold;
@@ -138,7 +142,7 @@ footer {
     position: absolute;
     bottom: .5rem;
     right: 1.5rem;
-    width: 50%;
+    width: 43%;
     height: auto;
 }
 
@@ -195,4 +199,20 @@ footer {
     right: 0rem;
     width: 30%;
     height: auto;
+}
+
+@media (max-width:890px) {
+    
+    h5,
+    .card-filler {
+        font-size: 2.5vw;
+    }
+}
+
+@media (max-width:549px) {
+    
+    h5,
+    .card-filler {
+        font-size: 4.5vw;
+    }
 }
