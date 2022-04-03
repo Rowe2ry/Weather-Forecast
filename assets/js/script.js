@@ -111,7 +111,7 @@ function populatePage (arr) {
     for (i = 0; i < arr.length; i++) {
         if (i > 1) {
             var pageWeekday = document.getElementById('day' + i + '-weekday');
-            pageWeekday.textContent=arr[i].weekday;
+            pageWeekday.textContent=arr[i].weekday + ":";
         };
         if (i === 0) {
             var cityNameFromAPI = document.getElementById('locationName');
@@ -120,9 +120,15 @@ function populatePage (arr) {
         };
         var pageIcon = document.getElementById('day' + i + '-icon');
         pageIcon.setAttribute('src', 'http://openweathermap.org/img/wn/' + arr[i].icon + '@2x.png');
-
+        var pageDate = document.getElementById('day' + i + '-date');
+        pageDate.textContent = arr[i].date;
+        var pageTemp = document.getElementById('day' + i + '-temp');
+        pageTemp.textContent = arr[i].temp;
+        var pageHumid = document.getElementById('day' + i + '-humid');
+        pageHumid.textContent = arr[i].humid;
+        var pageWind = document.getElementById('day' + i + '-wind');
+        pageWind.textContent = arr[i].wind;
     };
-
 };
 
 /* =========================================================================

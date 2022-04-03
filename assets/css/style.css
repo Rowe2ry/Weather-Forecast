@@ -119,6 +119,11 @@ margin: .5em;
     margin-top: 1.375rem;
     margin-bottom: 1.375rem;
     position: relative;
+    transition: all 400ms ease-in-out;
+}
+.card:hover {
+    transition: all 400ms ease-in-out;
+    border: 2px solid #73ff73
 }
 
 .card-title {
