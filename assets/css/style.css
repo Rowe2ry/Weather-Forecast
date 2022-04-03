@@ -1,0 +1,107 @@
+:root {
+    --color-dark : #444444;
+    --color-drk-highlight : #a0a0a0;
+    --color-drk-shadow: #1f1f1f;
+    --color-vibrant: #73ff73;
+    --color-vibrant-glow: #a5ffa5cc;
+    --color-bright: #dedede;
+    --color-white: #fff;
+    --glowing: .0625rem .0625rem .375rem #a5ffa5cc;
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    background-color: var(--color-dark);
+    border-top: 2px solid var(--color-vibrant);
+    border-bottom: 6px solid var(--color-drk-shadow);
+}
+
+.opening {
+    text-align: center;
+}
+
+.title {
+    margin-top: .25em;
+    color: var(--color-bright);
+}
+
+.glowing {
+    color: var(--color-vibrant);
+    animation: glowEffect 5s ease-in-out infinite both;
+}
+
+@keyframes glowEffect {
+    0% {
+        color: var(--color-vibrant);
+        text-shadow: none;
+    }
+    88% {
+        color: var(--color-vibrant);
+        text-shadow: none;
+    }
+    95% {
+        color: #aaffaa;
+        text-shadow:var(--glowing);
+    }
+    100% {
+        color: var(--color-vibrant);
+        text-shadow: none;
+    }
+}
+
+.section-title {
+    margin-top: 1.125em;
+}
+
+#tagline {
+    color: var(--color-white);
+    font-size: 2.75rem;
+    margin-top: 0;
+    margin-bottom: 0.375em;  
+}
+
+.credit {
+    font-size: 1.3rem;;
+    font-weight: bold;
+    color: var(--color-drk-highlight);
+    margin-bottom: 1.125em;
+}
+
+#openWeth {
+    color: var(--color-bright)
+}
+
+#openWeth:hover,
+#openWeth:focus-visible {
+    font-weight: bold;
+    color: #e96e50;
+}
+
+#search-bttn {
+    color: var(--color-vibrant);
+    background-color: var(--color-dark);
+}
+
+#search-bttn:hover,
+#search-bttn:focus-visible
+ {
+    color: var(--color-vibrant);
+    background-color: var(--color-dark-highlight);
+}
+
+.page-break-top {
+    width: 100%;
+    min-height: 1.9rem;
+    background-color: var(--color-dark);
+    border-top: 2px solid var(--color-drk-highlight);
+    border-bottom: 2px solid var(--color-vibrant);
+}
+
+.page-break-bottom {
+    width: 100%;
+    min-height: 1.5rem;
+    background-color: var(--color-dark);
+    border-top: 2px solid var(--color-vibrant);
+    border-bottom: 6px solid var(--color-drk-shadow);
+}

@@ -15,7 +15,7 @@ var APIkeyFiveDay = 'd2615aa0825538ecfc67550581ba6a13';
     iconCode +
     '@2x.png'; */
 
-var cityName = "atlanta";
+var city = "atlanta";
 
 // I know global variables aren't great, but I was having trouble defining a global variable that  would hold the fetch response as an object
 
@@ -31,7 +31,7 @@ var cityName = "atlanta";
 // grab one day weather data from OpenWeather by city name
 function rightNowWeather(location) {
     var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + 
-    cityName +
+    location + 
     '&units=imperial&appid=' +
     APIkeyCurrent;
 
@@ -42,17 +42,12 @@ function rightNowWeather(location) {
                     .then(function (data) {
                         // console.log(data);
                         var nowName = data.name; // string --- index 0
-                        var nowDate =  moment(data.dt, 'X').format('l'); // UNIX time to string DD/DD/YYYY --- index 1
-                        var nowIcon = data.weather[0].icon; // icon code 3 digit string --- index 2
-                        var nowTemp = data.main.temp; // °F --- index 3
-                        var nowHumid = data.main.humidity; // humidity in % --- index 4
-                        var nowWind = data.wind.speed; // wind speed in mp/h --- index 5
                         var latitude = data.coord.lat;
-                        latitude = latitude.toFixed(2); // number --- index 6
+                        latitude = latitude.toFixed(2); // number --- index 1
                         var longitude = data.coord.lon;
-                        longitude = longitude.toFixed(2);// number --- index 7
+                        longitude = longitude.toFixed(2);// number --- index 2
                         var nowDataRelevant = [
-                            nowName, nowDate, nowIcon, nowTemp, nowHumid, nowWind, latitude, longitude
+                            nowName, latitude, longitude
                         ];
                         fiveDayForecastWeather(nowDataRelevant);
                     });
@@ -64,7 +59,7 @@ function rightNowWeather(location) {
 
 function fiveDayForecastWeather(arr) {
     var fiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' +
-    arr[6] + '&lon=' + arr[7] + '&exclude=minutely,hourly,alerts&units=imperial&appid=' +
+    arr[1] + '&lon=' + arr[2] + '&exclude=minutely,hourly,alerts&units=imperial&appid=' +
     APIkeyFiveDay;
 
     fetch(fiveDayForecastURL)
@@ -73,25 +68,23 @@ function fiveDayForecastWeather(arr) {
                 response.json()
                     .then(function (data) {
                         // console.log(data);
-                        var uvIndex = data.daily[0].uvi;
-                        var nowDataRelevant = arr;
-                        nowDataRelevant.push(uvIndex);
-                        console.log ('relevant data for current conditions should be 9 things');
-                        console.log(nowDataRelevant);
-                        //populateCurrentWeather(nowDataRelevant);
+                        var cityName = arr[0];
                         var fiveDayRelevantdata = [];
-                        for (i = 1; i < 6; i++) {
+                        for (i = 0; i < 6; i++) {
                             var objectDay = {
-                                name: "day " + (i),
+                                city: cityName,
+                                day: "day " + (i),
                                 date: moment(data.daily[i].dt, 'X').format('l'),
+                                weekday: moment(data.daily[i].dt, 'X').format('dddd'),
                                 icon: data.daily[i].weather[0].icon,
                                 temp: data.daily[i].temp.day,
                                 wind: data.daily[i].wind_speed,
                                 humid: data.daily[i].humidity,
+                                uvIndex: data.daily[0].uvi
                             };
                             fiveDayRelevantdata.push(objectDay);
                         }
-                        console.log('5 days ofrelevant data here hopefully');
+                        console.log('6 days of relevant data here hopefully');
                         console.log(fiveDayRelevantdata);
                     });
                 } else {
@@ -111,4 +104,4 @@ function fiveDayForecastWeather(arr) {
 
 
 
-rightNowWeather(cityName);
+rightNowWeather(city);

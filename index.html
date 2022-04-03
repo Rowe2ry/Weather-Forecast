@@ -11,13 +11,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    
-    <main class="container">
-        <div class="row">
-            <h1>Console log for now</h1>
-        </div>
-    </main>
+    <header>
+        <section class="container opening">
+            <h1 class="title">Weather Dashboard <span class="glowing">Simplified</span></h1>
+            <p id="tagline" >Only see what you need</p>
+            <p class="credit">Powered by <a href="https://openweathermap.org/" id="openWeth">Open Weather</a> APIs</p>
+        </section>
+    </header>
 
+    <nav class="container">
+        <section class="row">
+            <h2 class="section-title">City Search:</h2>
+            <form>
+                <div class="row">
+                  <div class="six columns">
+                    <label for="cityName">City Name</label>
+                    <input class="u-full-width" type="email" placeholder="Atlanta" id="cityName">
+                  </div>
+                  <div class="six columns">
+                    <label for="exampleRecipientInput">Search History</label>
+                    <select class="u-full-width" id="search-history">
+                      <option value="Option 1">New York</option>
+                      <option value="Option 2">Chicago</option>
+                      <option value="Option 3">Boston</option>
+                    </select>
+                  </div>
+                </div>
+                <input id="search-btn" class="button-primary" type="submit" value="Search" style="color: #73ff73; background-color: #444444;">
+              </form>
+            </section>
+        </section>
+    </nav>
+    
+    <div class="page-break-top"></div>
+    <div class="page-break-bottom"></div>
+
+
+    
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
