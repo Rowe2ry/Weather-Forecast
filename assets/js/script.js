@@ -129,7 +129,7 @@ function loadHistory() {
     cleanSlateList();
     for (var i = 0; i < userHist.length; i++) {
         var newOption = document.createElement('option');
-        newOption.setAttribute('value', 'Option ' + (i + 1));
+        newOption.setAttribute('value', userHist[i]);
         newOption.textContent = userHist[i];
         searchHistoryEl.append(newOption);
     };
@@ -168,7 +168,7 @@ function historyManagement() {
     cleanSlateList();
     for (var i = 0; i < userHist.length; i++) {
         var newOption = document.createElement('option');
-        newOption.setAttribute('value', 'Option ' + (i + 1));
+        newOption.setAttribute('value', userHist[i]);
         newOption.textContent = userHist[i];
         searchHistoryEl.append(newOption);
     };
@@ -187,12 +187,17 @@ searchButtonEl.addEventListener("click", function(event) {
     if (searchQuery != '') {
         historyManagement()
         rightNowWeather(searchQuery);
-    }
+    };
 });
 
-//TODO: option event listener (on "change", #search-history)
-    // if the user clicks something from their history, pass that value (toLowercase)
-    // into the "rightNowWeather()" function
+searchHistoryEl.addEventListener('change', function (event) {
+    event.preventDefault();
+    console.log(event.target.value);
+    searchQueryInput.value = event.target.value
+    var searchQuery = searchQueryInput.value;
+    historyManagement()
+    rightNowWeather(searchQuery);
+});
 
 /* =========================================================================
  * ACTUAL PAGE LOAD LOGIC AND FUNCTION EXECUTION
