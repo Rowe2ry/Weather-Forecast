@@ -73,7 +73,7 @@ function fiveDayForecastWeather(arr) {
                             };
                             fiveDayRelevantdata.push(objectDay);
                         }
-                        console.log('6 days of relevant data here hopefully');
+                        console.log('6 days of relevant data here');
                         console.log(fiveDayRelevantdata);
                         populatePage(fiveDayRelevantdata);
                     });
@@ -120,50 +120,52 @@ function populatePage (arr) {
     };
 };
 function loadHistory() {
-    if (window.localStorage.getItem('weatherSearchHist')) {
-        var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
-    } else {
-        userHist = ['--']
+    if (window.localStorage.getItem('weatherSearchHist') === null) {
+        var starterData = [];
+        starterData.unshift('--');
+        window.localStorage.setItem('weatherSearchHist',JSON.stringify(starterData));
     };
-    var optionsToRemove = searchHistoryEl.childElementCount;
-    for (var i = 0; i < optionsToRemove + 1; i++) {
-        searchHistoryEl.firstChild.remove();
-    };
+    var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
+    cleanSlateList();
     for (var i = 0; i < userHist.length; i++) {
         var newOption = document.createElement('option');
         newOption.setAttribute('value', 'Option ' + (i + 1));
         newOption.textContent = userHist[i];
         searchHistoryEl.append(newOption);
     };
-    searchHistoryEl.firstChild.remove();
+};
+
+function cleanSlateList() {
+    while (searchHistoryEl.firstChild) {
+        searchHistoryEl.firstChild.remove();
+    }
 }
 
-
 function historyManagement() {
-    if (window.localStorage.getItem('weatherSearchHist')) {
-        var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
-        if (userHist.includes(searchQueryInput.value)){
-            indexToPull = userHist.indexOf(searchQueryInput.value);
-            userHist.splice(indexToPull, 1);
-            userHist.shift();
-            userHist.unshift(searchQueryInput.value);
-            userHist.unshift('--');
-        } else if (userHist.length < 11) {
-            userHist.shift();
-            userHist.unshift(searchQueryInput.value);
-            userHist.unshift('--');
-        } else {
-            userHist.pop();
-            userHist.shift();
-            userHist.unshift(searchQueryInput.value);
-            userHist.unshift('--');
-        };
+    var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
+    if (userHist.length == 1) {
+        console.log('adding to history');
+        searchHistoryEl.firstChild.remove();
+        userHist.shift();
+        userHist.unshift(searchQueryInput.value);
+        userHist.unshift('--');
+    } else if (userHist.includes(searchQueryInput.value)){
+        console.log('that was already in history, moving to top');
+        indexToPull = userHist.indexOf(searchQueryInput.value);
+        userHist.splice(indexToPull, 1);
+        userHist.shift();
+        userHist.unshift(searchQueryInput.value);
+        userHist.unshift('--');
+    } else {
+        console.log('continuing history');
+        searchHistoryEl.firstChild.remove();
+        userHist.shift();
+        userHist.unshift(searchQueryInput.value);
+        userHist.unshift('--');
     };
     window.localStorage.setItem('weatherSearchHist',JSON.stringify(userHist));
     var optionsToRemove = searchHistoryEl.childElementCount;
-    for (var i = 0; i < optionsToRemove; i++) {
-        searchHistoryEl.firstChild.remove();
-    };
+    cleanSlateList();
     for (var i = 0; i < userHist.length; i++) {
         var newOption = document.createElement('option');
         newOption.setAttribute('value', 'Option ' + (i + 1));
