@@ -119,11 +119,36 @@ function populatePage (arr) {
         pageWind.textContent = arr[i].wind;
     };
 };
+function loadHistory() {
+    if (window.localStorage.getItem('weatherSearchHist')) {
+        var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
+    } else {
+        userHist = ['--']
+    };
+    var optionsToRemove = searchHistoryEl.childElementCount;
+    for (var i = 0; i < optionsToRemove + 1; i++) {
+        searchHistoryEl.firstChild.remove();
+    };
+    for (var i = 0; i < userHist.length; i++) {
+        var newOption = document.createElement('option');
+        newOption.setAttribute('value', 'Option ' + (i + 1));
+        newOption.textContent = userHist[i];
+        searchHistoryEl.append(newOption);
+    };
+    searchHistoryEl.firstChild.remove();
+}
+
 
 function historyManagement() {
-    if (window.localStorage.getItem('weatherSearchHist') !== null) {
+    if (window.localStorage.getItem('weatherSearchHist')) {
         var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
-        if (userHist.length < 11) {
+        if (userHist.includes(searchQueryInput.value)){
+            indexToPull = userHist.indexOf(searchQueryInput.value);
+            userHist.splice(indexToPull, 1);
+            userHist.shift();
+            userHist.unshift(searchQueryInput.value);
+            userHist.unshift('--');
+        } else if (userHist.length < 11) {
             userHist.shift();
             userHist.unshift(searchQueryInput.value);
             userHist.unshift('--');
@@ -133,20 +158,19 @@ function historyManagement() {
             userHist.unshift(searchQueryInput.value);
             userHist.unshift('--');
         };
-    } else {
-        var userHist = ['--', searchQueryInput.value];
     };
     window.localStorage.setItem('weatherSearchHist',JSON.stringify(userHist));
     var optionsToRemove = searchHistoryEl.childElementCount;
     for (var i = 0; i < optionsToRemove; i++) {
         searchHistoryEl.firstChild.remove();
     };
-    for (var i = 1; i < userHist.length; i++) {
+    for (var i = 0; i < userHist.length; i++) {
         var newOption = document.createElement('option');
         newOption.setAttribute('value', 'Option ' + (i + 1));
         newOption.textContent = userHist[i];
         searchHistoryEl.append(newOption);
     };
+
 }
 
 /* =========================================================================
@@ -171,3 +195,5 @@ searchButtonEl.addEventListener("click", function(event) {
 /* =========================================================================
  * ACTUAL PAGE LOAD LOGIC AND FUNCTION EXECUTION
  * ========================================================================= */
+
+loadHistory()
