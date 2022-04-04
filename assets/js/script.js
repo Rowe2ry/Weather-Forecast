@@ -120,8 +120,34 @@ function populatePage (arr) {
     };
 };
 
-//TODO: function to grab the local storage on page load and populate the history.
-    // Limit to last 10 searches and always start with blank string (11 item array)
+function historyManagement() {
+    if (window.localStorage.getItem('weatherSearchHist') !== null) {
+        var userHist = JSON.parse(window.localStorage.getItem('weatherSearchHist'));
+        if (userHist.length < 11) {
+            userHist.shift();
+            userHist.unshift(searchQueryInput.value);
+            userHist.unshift('--');
+        } else {
+            userHist.pop();
+            userHist.shift();
+            userHist.unshift(searchQueryInput.value);
+            userHist.unshift('--');
+        };
+    } else {
+        var userHist = ['--', searchQueryInput.value];
+    };
+    window.localStorage.setItem('weatherSearchHist',JSON.stringify(userHist));
+    var optionsToRemove = searchHistoryEl.childElementCount;
+    for (var i = 0; i < optionsToRemove; i++) {
+        searchHistoryEl.firstChild.remove();
+    };
+    for (var i = 1; i < userHist.length; i++) {
+        var newOption = document.createElement('option');
+        newOption.setAttribute('value', 'Option ' + (i + 1));
+        newOption.textContent = userHist[i];
+        searchHistoryEl.append(newOption);
+    };
+}
 
 /* =========================================================================
  * ACTIVE EVENT LISTENERS
@@ -133,6 +159,7 @@ searchButtonEl.addEventListener("click", function(event) {
     event.preventDefault();
     var searchQuery = searchQueryInput.value;
     if (searchQuery != '') {
+        historyManagement()
         rightNowWeather(searchQuery);
     }
 });
